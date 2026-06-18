@@ -9,7 +9,7 @@ const configBdd = {
     host: "localhost",
     user: "root",
     password: "",
-    database: "artist",
+    database: "musique",
     port: 3306
 }
 
