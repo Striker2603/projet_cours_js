@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+    
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    
+        label {
+            display: inline-block;
+            width: 120px;
+            text-align: right;
+            margin-right: 10px;
+        }
+    
+        input {
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Ajouter un artiste</h2>
+    <form action="/save" method="post">
+        <label for="prenom">Prenom: </label>
+        <input type="text" id="prenom" name="prenom" required> <br>
+        
+        <label for="age">Age: </label>
+        <input type="number" id="age" name="age" required> <br>
+        
+        <label for="nationalite">Nationalité: </label>
+        <input type="text" id="nationalite" name="nationalite" required> <br>
+        
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <br><hr><br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Prenom</th>
+                <th>Age</th>
+                <th>Nationalité</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < resultat.length; i++) { %>
+                <% if (id_mode_edition && id_mode_edition == resultat[i].id) { %>
+                    <tr>
+                        <form action="/update?id=<%= resultat[i].id %>" method="post">
+                            <td><input type="text" name="prenom" value="<%= resultat[i].prenom %>" required></td>
+                            <td><input type="number" name="age" value="<%= resultat[i].age %>" required></td>
+                            <td><input type="text" name="nationalite" value="<%= resultat[i].nationalite %>" required></td>
+                            <td>
+                                <button type="submit">Enregistrer</button>
+                                <a href="/">Annuler</a>
+                            </td>
+                        </form>
+                    </tr>
+                <% } else { %>
+                    <tr>
+                        <td><%= resultat[i].prenom %></td>
+                        <td><%= resultat[i].age %></td>
+                        <td><%= resultat[i].nationalite %></td>
+                        <td>
+                            <a href="/?edit=<%= resultat[i].id %>" style="margin-right: 10px;">Modifier</a>
+                            <a href="/supprimer?id=<%= resultat[i].id %>" onclick="return confirm('Supprimer ?')">Supprimer</a>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>
